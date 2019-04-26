@@ -1,0 +1,29 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+	<!-- Leaf node -->
+	<mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
+  (click)="activeNode = node" [ngClass]="{ 'background-highlight': activeNode === node }">
+		<button mat-icon-button></button> <span class="txtColor">{{node.item}}</span>
+	</mat-tree-node> 
+
+	<!-- expandable node -->
+	<mat-tree-node *matTreeNodeDef="let node; when: hasChild;let  i =index" matTreeNodePadding>
+
+		<button id="node-{{node.item}}" mat-icon-button [attr.aria-label]="'toggle ' + node.filename" (click)="loadChildren(node)"
+		 matTreeNodeToggle>
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button> {{node.item}}
+	</mat-tree-node>
+
+	<mat-tree-node *matTreeNodeDef="let node; when: isLoadMore">
+		<button mat-button (click)="loadMore(node.loadMoreParentItem)">
+      Load more...
+    </button>
+	</mat-tree-node>
+</mat-tree>
+
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
